@@ -1,9 +1,53 @@
+//? Providers
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+//? hooks
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
-import { useEffect } from "react";
+//? componentes
+import {
+  NotFound,
+  AddNewPatientComponent,
+  DashboardComponent,
+} from "../../components";
 
-import { LoginPage } from "../loginPage";
-import { StartPage } from "../StartPage";
+//? Pages
+import { LoginPage, StartPage } from "../";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <StartPage />,
+    children: [
+      {
+        path: "/",
+        element: <DashboardComponent />,
+      },
+      {
+        path: "/cadastrar-paciente",
+        element: <AddNewPatientComponent />,
+      },
+      {
+        path: "/cadastrar-vacina",
+        element: <AddNewPatientComponent />,
+      },
+      {
+        path: "/historico-de-aplicacao",
+        element: <AddNewPatientComponent />,
+      },
+      {
+        path: "/detalhes-de-aplicacao",
+        element: <AddNewPatientComponent />,
+      },
+      {
+        path: "*",
+        element: <NotFound />,
+      },
+    ],
+  },
+  ,
+]);
 
 export function RoutePage() {
   const { user } = useSelector((state) => state);
@@ -12,5 +56,5 @@ export function RoutePage() {
     console.log(user);
   }, [user]);
 
-  return <>{!user ? <StartPage /> : <LoginPage />}</>;
+  return <>{!user ? <RouterProvider router={router} /> : <LoginPage />}</>;
 }

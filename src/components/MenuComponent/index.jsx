@@ -5,7 +5,7 @@ import {
   ListItemButton,
   ListItemIcon,
 } from "@mui/material";
-
+import { useNavigate, Link } from "react-router-dom";
 import {
   Home as HomeIcon,
   GroupAdd as GroupAddIcon,
@@ -16,8 +16,9 @@ import {
 } from "@mui/icons-material";
 
 export function MenuComponent() {
+  const navigate = useNavigate();
   const menuItens = [
-    { title: "Pagina Inicial", link: "pagina-inicial", icon: <HomeIcon /> },
+    { title: "Pagina Inicial", link: "/", icon: <HomeIcon /> },
     {
       title: "Cadastrar Paciente",
       link: "cadastrar-paciente",
@@ -43,11 +44,15 @@ export function MenuComponent() {
   function handleLogOut() {
     console.log("Sair");
   }
+
+  function handleNavigate(page) {
+    navigate(page);
+  }
   return (
     <Box
       sx={{
         width: "220px",
-        height: "100vh",
+        height: "calc(100vh - 50px)",
         background: "white",
         display: "flex",
         flexDirection: "column",
@@ -59,7 +64,7 @@ export function MenuComponent() {
       <List>
         {menuItens.map((item, index) => (
           <ListItem key={item.link} sx={{ margin: 0, padding: 0 }}>
-            <ListItemButton>
+            <ListItemButton onClick={() => handleNavigate(item.link)}>
               <ListItemIcon
                 sx={{
                   display: "flex",
@@ -69,6 +74,7 @@ export function MenuComponent() {
                   width: "100%",
                 }}
               >
+                {/* <Link></Link> */}
                 {item.icon}
                 {item.title}
               </ListItemIcon>
