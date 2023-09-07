@@ -16,10 +16,16 @@ import {
 import { ContainerStyle, ButtonStyle, ButtonCliqueAquiStyle } from "./style";
 
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { login, logout } from "../../store/reducer/loginSlice";
 
 import { BasicModal } from "../ModalCreateAccount";
 
+import Account from "../../database/models/account";
+
 export function LoginFormComponent() {
+  const dispatch = useDispatch();
+
   const [hasInputLoginError, setInputLoginError] = useState(false);
   const [isInputLoginEmpty, setInputLoginEmpty] = useState(false);
   const [hasInputPasswordError, setInputPasswordError] = useState(false);
@@ -31,15 +37,26 @@ export function LoginFormComponent() {
 
   const [isModalOpen, setModalOpen] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     if (!inputLoginValue) {
       setInputLoginError(true);
       setInputLoginEmpty(true);
     }
+
     if (!inputPasswordValue) {
       setInputPasswordEmpty(true);
       setInputPasswordError(true);
     }
+
+    const isLoginValid = await Account.auth(
+      inputLoginValue,
+      inputPasswordValue
+    );
+
+    if (isLoginValid) return dispatch(login());
+
+    setInputLoginError(true);
+    setInputPasswordError(true);
   };
 
   const handleClose = (event, reason) => {
@@ -108,7 +125,6 @@ export function LoginFormComponent() {
           <Input
             id="input-login"
             error={hasInputLoginError}
-            autoFocus={true}
             onBlur={() => handleFocusOutLogin(event)}
             onChange={handleChangeInputLoginValue}
           />

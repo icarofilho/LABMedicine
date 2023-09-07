@@ -20,7 +20,7 @@ export function LoginPage() {
           <img src={Logo} width="100%" />
         </Box>
       )}
-      <LoginFormComponent />;
+      <LoginFormComponent />
     </Container>
   );
 }
