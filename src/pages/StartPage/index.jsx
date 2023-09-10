@@ -11,8 +11,12 @@ export const StartPage = () => {
         <Grid item xs={12} sx={{ height: "50px", background: "darkgrey" }}>
           Menu
         </Grid>
-        <MenuComponent />
-        <Outlet />
+        <Grid item xs={2} sx={{ minWidth: "220px" }}>
+          <MenuComponent />
+        </Grid>
+        <Grid item xs>
+          <Outlet />
+        </Grid>
       </Grid>
     </Box>
   );
