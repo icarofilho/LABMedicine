@@ -2,12 +2,19 @@ import { Box, Grid, Button } from "@mui/material";
 import * as styled from "./styles";
 import Axios from "../../requests";
 import { useState } from "react";
+//? Database Models
+import Patients from "../../database/models/patients";
+
 export function AddNewPatientComponent() {
   const [address, setAddress] = useState({ street: "" });
   async function getAddress() {
     const data = await Axios.viaCep(21931160);
     console.log(data);
     setAddress(data);
+  }
+
+  async function createPatient() {
+    await Patients.create();
   }
   return (
     <form>
@@ -91,7 +98,7 @@ export function AddNewPatientComponent() {
               alignItems: "end",
             }}
           >
-            <Button variant="contained" color="info">
+            <Button variant="contained" color="info" onClick={createPatient}>
               Cadastrar
             </Button>
             <Button
