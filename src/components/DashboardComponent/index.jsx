@@ -134,7 +134,7 @@ export function DashboardComponent() {
                 gender={patient.gender}
                 age={patient.age}
                 allergies={patient.allergies}
-                born_at={patient.born_at}
+                born_at={patient.birthday}
               />
             );
           })}
@@ -150,7 +150,7 @@ export function DashboardComponent() {
                 gender={patient.gender}
                 age={patient.age}
                 allergies={patient.allergies}
-                born_at={patient.born_at}
+                born_at={patient.birthday}
               />
             );
           })}
