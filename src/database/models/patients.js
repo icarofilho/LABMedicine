@@ -8,8 +8,17 @@ class Patients {
     return data;
   }
 
-  async create() {
-    const payload = { name: "Icaro" };
+  async create(patient, address) {
+    console.log("patient: ", patient);
+    console.log("address: ", address);
+
+    const payload = { ...patient, allergies: patient.allergies.split(",") };
+
+    if (address) {
+      payload.address = {
+        ...address,
+      };
+    }
     await axios.post("http://localhost:3210/patients", payload);
   }
 }
