@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-export const validationSchema = Yup.object({
+export const patientValidationSchema = Yup.object({
   name: Yup.string()
     .min(10, "Este campo não pode ter menos de 10 caracteres")
     .required("Campo nome obrigatório."),
@@ -41,4 +41,23 @@ export const validationSchema = Yup.object({
   complement: Yup.string(),
   neighborhood: Yup.string(),
   reference: Yup.string(),
+});
+
+export const vaccineValidationSchema = Yup.object({
+  name: Yup.string()
+    .min(8, "min 8 caracteres")
+    .max(80, "Máximo de 80 caracteres")
+    .required("Campo obrigatório"),
+  lab: Yup.string()
+    .min(8, "min 8 caracteres")
+    .max(80, "Máximo de 80 caracteres")
+    .required("Campo obrigatório"),
+  date_applied_at: Yup.date().required("Campo obrigatório"),
+  time_applied_at: Yup.string()
+    .matches(/(?:[01]\d|2[0-3]):[0-5]\d/, "hora inválida")
+    .required("Campo obrigatório"),
+  ml_applied: Yup.number().positive().required("Campo obrigatório"),
+  obs: Yup.string()
+    .min(8, "min 8 caracteres")
+    .max(80, "Máximo de 80 caracteres"),
 });

@@ -8,7 +8,7 @@ import Patients from "../../database/models/patients";
 import { Formik, Field, Form, useFormik, ErrorMessage } from "formik";
 // import * as Yup from "yup";
 
-import { validationSchema } from "../../utils/yupValidations";
+import { patientValidationSchema } from "../../utils/yupValidations";
 
 export function AddNewPatientComponent() {
   const [address, setAddress] = useState({ street: "" });
@@ -65,7 +65,7 @@ export function AddNewPatientComponent() {
   return (
     <Formik
       initialValues={initialValues}
-      validationSchema={validationSchema}
+      validationSchema={patientValidationSchema}
       onSubmit={onSubmit}
     >
       <Form>

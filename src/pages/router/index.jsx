@@ -10,6 +10,7 @@ import {
   NotFound,
   AddNewPatientComponent,
   DashboardComponent,
+  AddNewVaccineComponent,
 } from "../../components";
 
 //? Pages
@@ -30,7 +31,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/cadastrar-vacina",
-        element: <AddNewPatientComponent />,
+        element: <AddNewVaccineComponent />,
       },
       {
         path: "/historico-de-aplicacao",

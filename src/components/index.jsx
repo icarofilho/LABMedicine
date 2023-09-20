@@ -4,3 +4,4 @@ export * from "./LoginFormComponent";
 export * from "./MenuComponent";
 export * from "./ModalCreateAccount";
 export * from "./NotFoundComponent";
+export * from "./AddNewVaccineComponent";
