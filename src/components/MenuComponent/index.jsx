@@ -5,7 +5,7 @@ import {
   ListItemButton,
   ListItemIcon,
 } from "@mui/material";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Home as HomeIcon,
   GroupAdd as GroupAddIcon,
@@ -13,9 +13,23 @@ import {
   Colorize as ColorizeIcon,
   Logout as LogoutIcon,
   Inventory as InventoryIcon,
+  CloseFullscreen as CloseFullscreenIcon,
+  OpenInFull as OpenInFullIcon,
 } from "@mui/icons-material";
+import { useState } from "react";
+import { logout } from "../../store/reducer/loginSlice";
+import { useDispatch } from "react-redux";
 
 export function MenuComponent() {
+  const dispatch = useDispatch();
+  const [hideMenu, setHideMenu] = useState(false);
+  const [menuSize, setMenuSize] = useState("220");
+
+  const handleChangeMenuSize = () => {
+    setHideMenu((state) => !state);
+    hideMenu ? setMenuSize("220") : setMenuSize("55");
+  };
+
   const navigate = useNavigate();
   const menuItens = [
     { title: "Pagina Inicial", link: "/", icon: <HomeIcon /> },
@@ -42,7 +56,7 @@ export function MenuComponent() {
   ];
 
   function handleLogOut() {
-    console.log("Sair");
+    dispatch(logout());
   }
 
   function handleNavigate(page) {
@@ -51,7 +65,7 @@ export function MenuComponent() {
   return (
     <Box
       sx={{
-        width: "220px",
+        width: `${menuSize}px`,
         height: "calc(100vh - 50px)",
         background: "white",
         display: "flex",
@@ -62,7 +76,30 @@ export function MenuComponent() {
       }}
     >
       <List>
-        {menuItens.map((item, index) => (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "flex-end",
+          }}
+        >
+          <ListItem sx={{ margin: 0, padding: 0 }}>
+            <ListItemButton alignItems="center" onClick={handleChangeMenuSize}>
+              <ListItemIcon
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "10px",
+                  width: "100%",
+                }}
+              >
+                {!hideMenu ? <CloseFullscreenIcon /> : <OpenInFullIcon />}
+                {!hideMenu && "Fechar menu"}
+              </ListItemIcon>
+            </ListItemButton>
+          </ListItem>
+        </div>
+        {menuItens.map((item) => (
           <ListItem key={item.link} sx={{ margin: 0, padding: 0 }}>
             <ListItemButton onClick={() => handleNavigate(item.link)}>
               <ListItemIcon
@@ -76,7 +113,7 @@ export function MenuComponent() {
               >
                 {/* <Link></Link> */}
                 {item.icon}
-                {item.title}
+                {!hideMenu && item.title}
               </ListItemIcon>
             </ListItemButton>
           </ListItem>
@@ -95,7 +132,7 @@ export function MenuComponent() {
               }}
             >
               <LogoutIcon />
-              Sair
+              {!hideMenu && "Sair"}
             </ListItemIcon>
           </ListItemButton>
         </ListItem>
