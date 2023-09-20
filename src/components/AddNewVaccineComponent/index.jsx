@@ -1,7 +1,7 @@
-import { Box, Grid, Button } from "@mui/material";
-import { Formik, Field, Form, useFormik, ErrorMessage } from "formik";
+import { Box, Button } from "@mui/material";
+import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as styled from "./styles";
-import axios from "axios";
+
 import Vaccine from "../../database/models/vaccine";
 import Patients from "../../database/models/patients";
 
@@ -10,8 +10,8 @@ import { useEffect, useState } from "react";
 
 export function AddNewVaccineComponent() {
   const [patients, setPatients] = useState();
+  const [filtered, setFiltered] = useState([]);
   useEffect(() => {
-    console.log("useEffect");
     async function getPatients() {
       setPatients(await Patients.findAll());
     }
@@ -26,28 +26,42 @@ export function AddNewVaccineComponent() {
     obs: "",
   };
 
-  const onSubmit = (values) => {
-    Vaccine.create(values);
+  const handleSearch = (event) => {
+    console.log(event.target.value);
+    const filtered = patients.filter((patient) =>
+      patient.name.toLowerCase().includes(event.target.value)
+    );
+    setFiltered(filtered);
   };
+
+  const onSubmit = (values) => {
+    const checkbox = document.querySelectorAll(
+      "input[type='checkbox']:checked"
+    );
+
+    for (let input of checkbox) {
+      const { dataset } = input;
+
+      Vaccine.create({ ...values, ...dataset });
+    }
+  };
+
   return (
     <Box>
-      {patients?.map((patient, index) => {
+      <styled.ContainerInput>
+        <styled.Input type="text" onChange={handleSearch} />
+      </styled.ContainerInput>
+
+      {filtered?.map((patient, index) => {
         return (
           <styled.ContainerList key={patient.cpf + index}>
-            <h3>
-              #{String(patient.id).padStart(4, "0")} {patient.name}
-            </h3>
-            <div>
-              <Button size="small" variant="contained">
-                editar
-              </Button>
-              <Button size="small" variant="contained" color="error">
-                deletar
-              </Button>
-              <Button size="small" variant="contained">
-                salvar
-              </Button>
-            </div>
+            <input
+              type="checkbox"
+              data-patient_id={patient.id}
+              data-patient_cpf={patient.cpf}
+              data-patient_name={patient.name}
+            />
+            #{String(patient.id).padStart(4, "0")} {patient.name}
           </styled.ContainerList>
         );
       })}
@@ -107,8 +121,14 @@ export function AddNewVaccineComponent() {
               </div>
             </styled.FieldsetTextArea>
             <styled.ContainerButton>
-              <Button type="submit" variant="contained">
-                Cadastrar
+              <Button type="submit" variant="contained" disabled>
+                editar
+              </Button>
+              <Button type="submit" variant="contained" disabled>
+                deletar
+              </Button>
+              <Button type="submit" variant="contained" color="success">
+                Salvar
               </Button>
             </styled.ContainerButton>
           </Form>

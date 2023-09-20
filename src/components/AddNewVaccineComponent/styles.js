@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  /* justify-content: space-evenly; */
   box-sizing: border-box;
 `;
 
@@ -62,12 +62,13 @@ export const ContainerButton = styled.div`
   display: flex;
   justify-content: flex-end;
   padding: 5px;
+  gap: 5px;
 `;
 
 //!!
 export const ContainerList = styled.div`
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
   padding: 10px;
   margin: 20px 10px;
@@ -83,4 +84,19 @@ export const ContainerList = styled.div`
     align-items: center;
     gap: 10px;
   }
+`;
+export const ContainerInput = styled.div`
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  margin-top: 10px;
+  height: 30px;
+`;
+
+export const Input = styled.input`
+  width: 95%;
+  padding: 0;
+  margin: 0;
 `;
