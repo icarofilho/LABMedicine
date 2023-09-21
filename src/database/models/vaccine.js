@@ -2,10 +2,17 @@ import axios from "axios";
 
 class Vaccine {
   async findAll() {
-    // const { data } = await axios.get(
-    //   "http://localhost:3210/patients?_sort=name&_order=asc"
-    // );
-    // return data;
+    const { data } = await axios.get(
+      "http://localhost:3210/vaccine?_sort=name&_order=asc"
+    );
+    return data;
+  }
+
+  async findByCpf({ cpf }) {
+    const { data } = await axios.get(
+      `http://localhost:3210/vaccine?patient_cpf=${cpf}`
+    );
+    return data;
   }
 
   async create(data) {

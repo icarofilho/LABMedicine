@@ -27,7 +27,10 @@ export function AddNewVaccineComponent() {
   };
 
   const handleSearch = (event) => {
-    console.log(event.target.value);
+    if (!event.target.value) {
+      setFiltered(null);
+      return;
+    }
     const filtered = patients.filter((patient) =>
       patient.name.toLowerCase().includes(event.target.value)
     );

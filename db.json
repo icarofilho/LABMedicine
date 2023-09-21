@@ -82,10 +82,7 @@
       "phone": 21982755865,
       "email": "icaro.ferreira.filho@gmail.com",
       "emergency_phone": 21982755865,
-      "allergies": [
-        "camarão",
-        " polvo"
-      ],
+      "allergies": ["camarão", " polvo"],
       "zip_code": "21931-160",
       "city": "",
       "state": "",
