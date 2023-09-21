@@ -8,10 +8,23 @@ class Patients {
     return data;
   }
 
-  async create(patient, address) {
-    console.log("patient: ", patient);
-    console.log("address: ", address);
+  async findOne({ cpf, name }) {
+    console.log("Patients");
+    if (name) {
+      const { data } = await axios.get(
+        `http://localhost:3210/patients?name=${name}`
+      );
+      return data;
+    }
+    if (cpf) {
+      const { data } = await axios.get(
+        `http://localhost:3210/patients?cpf=${cpf}`
+      );
+      return data;
+    }
+  }
 
+  async create(patient, address) {
     const payload = { ...patient, allergies: patient.allergies.split(",") };
 
     if (address) {
