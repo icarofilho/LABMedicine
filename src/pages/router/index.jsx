@@ -12,6 +12,7 @@ import {
   DashboardComponent,
   AddNewVaccineComponent,
   VacinationHistoryComponent,
+  PatientHistory,
 } from "../../components";
 
 //? Pages
@@ -40,7 +41,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/detalhes-de-aplicacao",
-        element: <AddNewPatientComponent />,
+        element: <PatientHistory />,
       },
       {
         path: "*",

@@ -9,6 +9,7 @@ class Vaccine {
   }
 
   async findByCpf({ cpf }) {
+    console.log("cpf", cpf);
     const { data } = await axios.get(
       `http://localhost:3210/vaccine?patient_cpf=${cpf}`
     );

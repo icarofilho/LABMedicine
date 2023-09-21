@@ -6,3 +6,4 @@ export * from "./ModalCreateAccount";
 export * from "./NotFoundComponent";
 export * from "./AddNewVaccineComponent";
 export * from "./VacinationHistoryComponent";
+export * from "./PatientHistory";
