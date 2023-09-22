@@ -1,8 +1,39 @@
-# React + Vite
+# LABMedicine
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Projeto visa a construção de um sistema de cadastro de pacientes e vacinas.
 
-Currently, two official plugins are available:
+## Instalação
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Para o funcionamento do projeto precisamos instalar as dependências.
+O Projeto foi desenvolvido utilizando o gerenciadores de pacotes YARN
+
+```bash
+  yarn
+  # ou
+  npm i
+```
+
+## Rodando o projeto
+
+Para executarmos o projeto, precisamos abrir 2 terminais:
+em um rodamos o front-end:
+
+```bash
+  yarn dev
+  # ou
+  npm run dev
+```
+
+No outro rodamos o back-end:
+
+```bash
+  yarn backend:start
+  # ou
+  npm run backend:start
+```
+
+## Stack utilizada
+
+**Front-end:** React, ReduxToolKit, styled-component, Material Ui
+
+**Back-end:** JSON-SERVER
