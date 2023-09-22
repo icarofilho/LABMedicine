@@ -3,30 +3,20 @@ import { useEffect, useState } from "react";
 
 //? Database Models
 import Patients from "../../database/models/patients";
+import Vaccines from "../../database/models/vaccine";
 
 //? Components
 import { PatientCardComponent } from "./PatientCardComponent";
 
 //? Mui
-import {
-  Card,
-  CardContent,
-  CardActions,
-  Typography,
-  Button,
-  Box,
-  Grid,
-  Input,
-  InputLabel,
-  TextField,
-  Select,
-  MenuItem,
-} from "@mui/material";
+import { Grid, TextField } from "@mui/material";
+import { Dashboard, DashboardContainer } from "./styles";
 
 export function DashboardComponent() {
   const [dashboardData, setDashboardData] = useState(null);
 
   const [patients, setPatients] = useState([]);
+  const [vaccines, setVaccines] = useState([]);
   const [searchPatient, setSearchPatient] = useState(null);
 
   useEffect(() => {
@@ -35,13 +25,16 @@ export function DashboardComponent() {
     }
     renderDashboard();
     async function getPatients() {
-      console.log("getPatients");
       const data = await Patients.findAll();
-      console.log("patients: ", data);
+
       setPatients(data);
       return data;
     }
     getPatients();
+
+    (async () => {
+      setVaccines(await Vaccines.findAll());
+    })();
 
     function buildDashboardData() {
       // console.log("patients", patients);
@@ -83,7 +76,16 @@ export function DashboardComponent() {
       }}
     >
       <Grid item xs={12}>
-        DASHBOARD
+        <DashboardContainer>
+          <Dashboard>
+            <div>Total de Pacientes cadastrados</div>
+            {patients.length}
+          </Dashboard>
+          <Dashboard>
+            <div>Total de Vacinas cadastradas</div>
+            {vaccines.length}
+          </Dashboard>
+        </DashboardContainer>
       </Grid>
       <Grid item xs={12}>
         <Grid

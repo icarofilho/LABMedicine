@@ -1,5 +1,4 @@
 import {
-  FormControl,
   InputLabel,
   Input,
   FormHelperText,
@@ -9,15 +8,14 @@ import {
   Button,
   Snackbar,
   Alert,
-  Typography,
-  Modal,
 } from "@mui/material";
 
 import { ContainerStyle, ButtonStyle, ButtonCliqueAquiStyle } from "./style";
 
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { login, logout } from "../../store/reducer/loginSlice";
+import { login } from "../../store/reducer/loginSlice";
+import { setName } from "../../store/reducer/userNameSlice";
 
 import { BasicModal } from "../ModalCreateAccount";
 
@@ -37,7 +35,7 @@ export function LoginFormComponent() {
 
   const [isModalOpen, setModalOpen] = useState(false);
 
-  const handleLogin = async (e) => {
+  const handleLogin = async () => {
     if (!inputLoginValue) {
       setInputLoginError(true);
       setInputLoginEmpty(true);
@@ -53,6 +51,7 @@ export function LoginFormComponent() {
       inputPasswordValue
     );
 
+    if (isLoginValid) dispatch(setName(inputLoginValue));
     if (isLoginValid) return dispatch(login());
 
     setInputLoginError(true);
@@ -96,12 +95,10 @@ export function LoginFormComponent() {
 
   const handleChangeInputLoginValue = (e) => {
     setLoginValue(e.target.value);
-    console.log(inputLoginValue);
   };
 
   const handleChangeInputPasswordValue = (e) => {
     setPasswordValue(e.target.value);
-    console.log(inputPasswordValue);
   };
 
   const handleOpenModal = () => {
@@ -149,6 +146,7 @@ export function LoginFormComponent() {
           )}
           <Box sx={{ ...ButtonStyle }}>
             <Button
+              type="submit"
               variant="contained"
               color="primary"
               onClick={() => handleLogin()}

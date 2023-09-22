@@ -57,6 +57,7 @@ export function MenuComponent() {
 
   function handleLogOut() {
     dispatch(logout());
+    navigate("/");
   }
 
   function handleNavigate(page) {

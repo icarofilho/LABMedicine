@@ -2,7 +2,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 //? hooks
-import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 //? componentes
@@ -54,9 +53,9 @@ const router = createBrowserRouter([
 export function RoutePage() {
   const { user } = useSelector((state) => state);
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
-
-  return <>{!user ? <RouterProvider router={router} /> : <LoginPage />}</>;
+  return (
+    <>
+      {user ? <RouterProvider props={"ola"} router={router} /> : <LoginPage />}
+    </>
+  );
 }

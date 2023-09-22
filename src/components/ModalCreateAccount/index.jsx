@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-
+import Account from "../../database/models/account";
 import {
   Modal,
   Typography,
@@ -10,6 +10,8 @@ import {
   Box,
   FormGroup,
   TextField,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 
 import {
@@ -22,6 +24,8 @@ import {
 
 export function BasicModal({ isModalOpen, handleCloseModal }) {
   const [isPasswordOK, setPasswordOK] = useState(false);
+  const [isSnackOpen, setSnackOpen] = useState(false);
+  const [alertText, setAlertText] = useState(null);
 
   const handleClearInputs = () => {
     document.querySelector("#signup-email").value = null;
@@ -29,16 +33,51 @@ export function BasicModal({ isModalOpen, handleCloseModal }) {
     document.querySelector("#signup-confirm").value = null;
   };
 
-  const handleSignUp = () => {
-    console.log("entrou");
+  const handleSnackOpen = () => setSnackOpen(true);
+  const handleSnackClose = () => setSnackOpen(false);
+
+  const handleSignUp = async () => {
     const email = document.querySelector("#signup-email").value;
     const pass = document.querySelector("#signup-pass").value;
     const confirm = document.querySelector("#signup-confirm").value;
+    console.log("pass", pass);
+    console.log("confirm", confirm);
 
-    if (pass != confirm) {
-      setPasswordOK(true);
+    const emailRegex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]/;
+    const isEmailValid = new RegExp(emailRegex).test(email);
+
+    if (!email || !pass || !confirm) {
+      setAlertText("E-mail / Senha não pode estar vazio");
+      handleSnackOpen();
       return;
     }
+
+    if (!isEmailValid) {
+      setAlertText("E-mail invalido");
+      handleSnackOpen();
+      return;
+    }
+
+    if (pass.length < 10) {
+      console.log("entrou aqui");
+      setAlertText("Senha com menos de 10 caracteres");
+      handleSnackOpen();
+      return;
+    }
+
+    if (pass != confirm) {
+      console.log("entrou");
+      setAlertText("Senha Invalida");
+      handleSnackOpen();
+      return;
+    }
+    await Account.create(email, pass);
+    setPasswordOK(true);
+    setAlertText("Conta criada com sucesso!");
+    handleSnackOpen();
+    setTimeout(() => {
+      handleCloseModal();
+    }, 2000);
   };
   return (
     <div>
@@ -118,6 +157,23 @@ export function BasicModal({ isModalOpen, handleCloseModal }) {
           </Box>
         </Box>
       </Modal>
+      <Snackbar
+        open={isSnackOpen}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        autoHideDuration={6000}
+        onClose={handleSnackClose}
+        // message="Redefinição de senha indisponível"
+        // action={action}
+      >
+        <Alert
+          onClose={handleSnackClose}
+          severity={isPasswordOK ? "success" : "error"}
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {alertText}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

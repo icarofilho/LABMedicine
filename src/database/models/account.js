@@ -11,6 +11,11 @@ class Account {
     }
     return false;
   }
+
+  async create(email, password) {
+    const payload = { email, password };
+    await axios.post("http://localhost:3210/accounts", payload);
+  }
 }
 
 export default new Account();
