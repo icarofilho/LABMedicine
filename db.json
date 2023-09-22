@@ -1,0 +1,11 @@
+{
+  "accounts": [
+    {
+      "email": "icaro@gmail.com",
+      "password": "setPasswordOK",
+      "id": 1
+    }
+  ],
+  "patients": [],
+  "vaccine": []
+}
